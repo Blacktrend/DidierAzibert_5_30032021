@@ -1,0 +1,35 @@
+{
+  "name": "didierazibert_5_30032021",
+  "version": "1.0.0",
+  "description": "This is the back end server for Project 5 of the Junior Web Developer path.",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+	"sass": "sass --watch" ./scss/main.scss:./docs/css/style.css --style compressed"
+	"prefix": "postcss ./docs/css/style.css --use autoprefixer -d ./docs/css/prefixed/"
+  },
+  "browserslist": "last 4 versions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blacktrend/DidierAzibert_5_30032021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.3.8",
+    "mongoose-unique-validator": "^2.0.2",
+    "uuid": "^3.3.2"
+  }
+  "bugs": {
+    "url": "https://github.com/Blacktrend/DidierAzibert_5_30032021/issues"
+  },
+  "homepage": "https://github.com/Blacktrend/DidierAzibert_5_30032021#readme"
+}
