@@ -88,18 +88,18 @@
                     <div class="col-12 col-lg-6">
                         <h1 class="text-center text-lg-left">Nom produit</h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis at consectetur lorem donec massa sapien faucibus et.</p>
-                        <a class="btn btn-outline-primary mb-5" href="#details">En savoir plus</a>
+                        <a class="btn btn-outline-info mb-5" href="#details">En savoir plus</a>
                         <form action="" method="post" class="text-center text-lg-left mb-5">
                             <fieldset class="form-group">
-                                <label for="option">Choisissez une couleur&nbsp;:</label>
+                                <label for="option" class="mb-0 mt-2 pl-1">Choisissez une couleur&nbsp;:</label>
                                 <select class="form-control mb-4 w-auto mx-auto mx-lg-0" name="option" id="option" required>
                                     <option value="">--Veuillez choisir une option--</option>
                                     <option value="marron">marron</option>
                                     <option value="beige">beige</option>
                                     <option value="blanc">blanc</option>
                                 </select>
-                                <label for="qty">Quantité&nbsp;:</label>
-                                <input class="form-control mx-auto mx-lg-0" type="number" id="qty" step="1" min="1" value="1" inputmode="numeric" maxlength="2"/>
+                                <label for="qty" class="mb-0 mt-2 pl-1">Quantité&nbsp;:</label>
+                                <input class="form-control mx-auto mx-lg-0" type="number" id="qty" step="1" min="1" max="99" value="1" inputmode="numeric"/>
                             </fieldset>
                             <button class="btn btn-primary px-5 py-3 text-uppercase font-weight-bold" type="submit" name="add-to-cart" value="">Ajouter au panier</button>
                         </form>
