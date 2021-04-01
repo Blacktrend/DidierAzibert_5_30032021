@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Ours en peluche fait main | Orinoco</title>
+        <meta name="description" content="Ours en peluche fait main">
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <!--<link rel="stylesheet" type="text/css" href="css/prefixed/style.css" /> *** A UTILISER après AUTOPREFIXER-->
+        <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+    </head>
+    <body class="d-flex flex-column">
+        <header class="container-fluid bg-dark">
+            <div class="row">
+                <div class="col text-center">
+                    <a class=" navbar-brand" href="index.html">
+                        <img src="img/logo-Orinoco.jpg" class="rounded-pill img-fluid w-75" alt="Logo Orinoco" title="Logo Orinoco"/>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <!-- main menu -->
+                <nav class="col-8 navbar navbar-expand-md navbar-dark py-0" aria-label="main">
+                    <button class="navbar-toggler border-0 pb-2 pt-0" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon d-block mx-auto"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    Accueil
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    A propos
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="mailto:contact@orinoco.com">
+                                    Contact
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Cgv
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Mentions légales
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <!-- user menu -->
+                <nav class="col-4 navbar navbar-dark justify-content-end py-0 align-items-start" aria-label="user">
+                    <ul class="navbar-nav navbar-expand">
+                        <li class="nav-item mx-1">
+                            <a class="nav-link pt-0" href="#">
+                                <svg class="bi" width="32" height="32" fill="currentColor">
+                                    <use xlink:href="../node_modules/bootstrap-icons/bootstrap-icons.svg#person"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link pt-0" href="cart.html">
+                                <svg class="bi p-1" width="32" height="32" fill="currentColor">
+                                    <use xlink:href="../node_modules/bootstrap-icons/bootstrap-icons.svg#cart3"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Nom produit</li>
+                </ol>
+            </nav>
+            <section class="container-xl">
+                <div class="row flex-column-reverse flex-lg-row">
+                    <div class="col-12 col-lg-6">
+                        <h1 class="text-center text-lg-left">Nom produit</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis at consectetur lorem donec massa sapien faucibus et.</p>
+                        <a class="btn btn-outline-primary mb-5" href="#details">En savoir plus</a>
+                        <form class="form-group" action="" method="post">
+                            <label for="option">Choisissez une couleur&nbsp;:</label>
+                            <select class="form-control" name="option" id="option" required>
+                                <option value="">--Veuillez choisir une option--</option>
+                                <option value="marron">marron</option>
+                                <option value="beige">beige</option>
+                                <option value="blanc">blanc</option>
+                            </select>
+                            <label for="qty">Quantité :</label>
+                            <input class="form-control" type="number" id="qty" step="1" min="1" value="1" inputmode="numeric"/>
+                            <button class="btn btn-primary" type="submit" name="add-to-cart" value="">Ajouter au panier</button>
+                        </form>
+                    </div>
+                    <div class="col-12 col-lg-6 text-center">
+                        <img src="img/teddy_1.jpg" class="product__img rounded img-fluid w-100" alt="Nom produit - ours en peluche fait main" title="Nom produit - ours en peluche fait main" width="690" height="690"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h2 id="details" class="mt-n5 pt-5">Description</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas. Netus et malesuada fames ac turpis. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt.</p>
+                        <h2>Caractéristiques</h2>
+                        <ul>
+                            <li>
+                               cousu main
+                            </li>
+                            <li>
+                                matières bio
+                            </li>
+                            <li>
+                                fabrication artisanale française
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="container-fluid bg-dark mt-auto p-4">
+            <div class="row">
+                <nav class="col navbar navbar-expand-sm navbar-dark justify-content-center" aria-label="footer">
+                    <ul class="navbar-nav">
+                        <li class="nav-item mx-1">
+                            <a class="nav-link" href="#">
+                                A propos
+                            </a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link" href="#">
+                                Cgv
+                            </a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link" href="#">
+                                Mentions légales
+                            </a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link" href="mailto:contact@orinoco.com">
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    </body>
+</html>

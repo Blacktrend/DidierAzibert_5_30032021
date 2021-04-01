@@ -1,0 +1,26 @@
+{
+  "name": "didierazibert_5_30032021",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"sass": "sass --watch ./scss/main.scss:./docs/css/style.css --style compressed",
+    "prefix": "postcss ./docs/css/style.css --use autoprefixer -d ./docs/css/prefixed/"
+  },
+  "browserslist": "last 4 versions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blacktrend/DidierAzibert_5_30032021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Blacktrend/DidierAzibert_5_30032021/issues"
+  },
+  "homepage": "https://github.com/Blacktrend/DidierAzibert_5_30032021#readme",
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "bootstrap-icons": "^1.4.1"
+  }
+}
