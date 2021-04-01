@@ -89,24 +89,26 @@
                         <h1 class="text-center text-lg-left">Nom produit</h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis at consectetur lorem donec massa sapien faucibus et.</p>
                         <a class="btn btn-outline-primary mb-5" href="#details">En savoir plus</a>
-                        <form class="form-group" action="" method="post">
-                            <label for="option">Choisissez une couleur&nbsp;:</label>
-                            <select class="form-control" name="option" id="option" required>
-                                <option value="">--Veuillez choisir une option--</option>
-                                <option value="marron">marron</option>
-                                <option value="beige">beige</option>
-                                <option value="blanc">blanc</option>
-                            </select>
-                            <label for="qty">Quantité :</label>
-                            <input class="form-control" type="number" id="qty" step="1" min="1" value="1" inputmode="numeric"/>
-                            <button class="btn btn-primary" type="submit" name="add-to-cart" value="">Ajouter au panier</button>
+                        <form action="" method="post" class="text-center text-lg-left mb-5">
+                            <fieldset class="form-group">
+                                <label for="option">Choisissez une couleur&nbsp;:</label>
+                                <select class="form-control mb-4 w-auto mx-auto mx-lg-0" name="option" id="option" required>
+                                    <option value="">--Veuillez choisir une option--</option>
+                                    <option value="marron">marron</option>
+                                    <option value="beige">beige</option>
+                                    <option value="blanc">blanc</option>
+                                </select>
+                                <label for="qty">Quantité&nbsp;:</label>
+                                <input class="form-control mx-auto mx-lg-0" type="number" id="qty" step="1" min="1" value="1" inputmode="numeric" maxlength="2"/>
+                            </fieldset>
+                            <button class="btn btn-primary px-5 py-3 text-uppercase font-weight-bold" type="submit" name="add-to-cart" value="">Ajouter au panier</button>
                         </form>
                     </div>
-                    <div class="col-12 col-lg-6 text-center">
-                        <img src="img/teddy_1.jpg" class="product__img rounded img-fluid w-100" alt="Nom produit - ours en peluche fait main" title="Nom produit - ours en peluche fait main" width="690" height="690"/>
+                    <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center">
+                        <img src="img/teddy_1.jpg" class="product__img rounded img-fluid w-100" alt="Nom produit - ours en peluche fait main" title="Nom produit - ours en peluche fait main" width="690" height="445"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-12">
                         <h2 id="details" class="mt-n5 pt-5">Description</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas. Netus et malesuada fames ac turpis. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt.</p>

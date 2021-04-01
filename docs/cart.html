@@ -79,40 +79,80 @@
             <section class="container-xl">
                 <div class="row">
                     <div class="col">
-                        <h1>Votre panier</h1>
-                        <table class="table">
+                        <h1 class="text-center">Votre panier</h1>
+                        <table class="table table-responsive-sm">
                             <thead class="thead-dark bg-dark">
                             <tr>
-                                <th scope="col">Réf.</th>
+                                <th scope="col">&nbsp;</th>
+                                <th scope="col">&nbsp;</th>
                                 <th scope="col">Désignation</th>
                                 <th scope="col">Prix</th>
                                 <th scope="col">Qté</th>
-                                <th scope="col">Total</th>
+                                <th scope="col" class="text-right">Sous-total</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <th scope="row">T3</th>
+                                <td>x</td>
+                                <td>
+                                    <img src="img/teddy_1_thumbnail.jpg" class="product__img--thumbnail rounded" alt="Nom produit - ours en peluche fait main" title="Nom produit - ours en peluche fait main" width="75" height="75"/>
+                                </td>
                                 <td>Ours en peluche marron</td>
                                 <td>39.95€</td>
                                 <td>2</td>
-                                <td>79.90€</td>
+                                <td class="text-right">79.90€</td>
                             </tr>
                             <tr>
-                                <th scope="row">T1</th>
+                                <td>x</td>
+                                <td>
+                                    <img src="img/teddy_1_thumbnail.jpg" class="product__img--thumbnail rounded" alt="Nom produit - ours en peluche fait main" title="Nom produit - ours en peluche fait main" width="75" height="75"/>
+                                </td>
                                 <td>Ours fait main blanc</td>
                                 <td>39.95€</td>
                                 <td>1</td>
-                                <td>39.95€</td>
+                                <td class="text-right">39.95€</td>
                             </tr>
                             </tbody>
+                            <tfoot>
+                            <tr class="">
+                                <th colspan="5" scope="row" class="text-right">Total TTC</th>
+                                <td class="text-right font-weight-bold">119.85€</td>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
             </section>
             <section class="container-xl">
-                <div>
+                <div class="row">
+                    <div class="col">
+                        <div class="dropdown-divider border-secondary"></div>
+                        <h2 class="text-center mt-5">Vos coordonnées</h2>
+                        <form action="" method="post" class="my-5">
+                            <div class="row">
+                                <fieldset class="form-group col-sm-6">
+                                    <label for="lastName">Nom&nbsp;:</label>
+                                    <input class="form-control" type="text" id="lastName" required/>
+                                    <label for="firstName">Prénom&nbsp;:</label>
+                                    <input class="form-control" type="text" id="firstName" required/>
+                                    <label for="address">Adresse&nbsp;:</label>
+                                    <input class="form-control" type="text" id="address" required/>
+                                </fieldset>
 
+                                <fieldset class="form-group col-sm-6">
+                                    <label for="cp">Code postal&nbsp;:</label>
+                                    <input class="form-control" type="text" id="cp" inputmode="numeric" maxlength="5"/>
+                                    <label for="city">Ville&nbsp;:</label>
+                                    <input class="form-control" type="text" id="city" required/>
+                                    <label for="email">E-mail&nbsp;:</label>
+                                    <input class="form-control" type="email" id="email" required/>
+                                </fieldset>
+                            </div>
+                            <div class="row justify-content-center mt-5">
+                                <button class="btn btn-primary px-5 py-3 text-uppercase font-weight-bold" type="submit" name="Commander" value="">Commander</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </section>
         </main>
