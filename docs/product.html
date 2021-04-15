@@ -81,37 +81,39 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Nom produit</li>
+                    <li id="breadcrumb" class="breadcrumb-item active" aria-current="page"></li>
                 </ol>
             </nav>
             <section class="container-xl">
                 <div class="row flex-column-reverse flex-lg-row">
                     <div class="col-12 col-lg-6">
-                        <h1 class="text-center text-lg-left">Nom produit</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis at consectetur lorem donec massa sapien faucibus et.</p>
+                        <h1 id="name" class="text-center text-lg-left"></h1>
+                        <p id="description"></p>
                         <a class="btn btn-outline-info mb-5" href="#details">En savoir plus</a>
                         <form action="" method="post" class="text-center text-lg-left mb-5">
                             <fieldset class="form-group">
                                 <label for="option" class="mb-0 mt-2 pl-1">Choisissez une couleur&nbsp;:</label>
-                                <select class="form-control mb-4 w-auto mx-auto mx-lg-0" name="option" id="option" required>
+                                <select id="options" class="form-control mb-4 w-auto mx-auto mx-lg-0" name="option" id="option" required>
                                     <option value="">--Veuillez choisir une option--</option>
-                                    <option value="marron">marron</option>
-                                    <option value="beige">beige</option>
-                                    <option value="blanc">blanc</option>
+
                                 </select>
                                 <label for="qty" class="mb-0 mt-2 pl-1">Quantité&nbsp;:</label>
-                                <input class="form-control mx-auto mx-lg-0" type="number" id="qty" step="1" min="1" max="99" value="1" inputmode="numeric"/>
+                                <div class="d-lg-flex align-items-center">
+                                    <input class="form-control mx-auto mx-lg-0" type="number" id="qty" step="1" min="1" max="99" value="1" inputmode="numeric"/>
+                                    <div id="price" class="font-weight-bold ml-lg-5 h3 mb-lg-0 mt-4 mt-lg-0"></div>
+                                </div>
                             </fieldset>
                             <button class="btn btn-primary px-5 py-3 text-uppercase font-weight-bold" type="submit" name="add-to-cart" value="">Ajouter au panier</button>
                         </form>
                     </div>
                     <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center">
-                        <img src="img/teddy_1.jpg" class="product__img rounded img-fluid w-100" alt="Nom produit - ours en peluche fait main" title="Nom produit - ours en peluche fait main" width="690" height="445"/>
+                        <img id="img" src="" class="product__img rounded img-fluid w-100" alt="" title="" width="690" height="445"/>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-12">
                         <h2 id="details" class="mt-n5 pt-5">Description</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas. Netus et malesuada fames ac turpis. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt.</p>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas. Netus et malesuada fames ac turpis. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt.</p>
                         <h2>Caractéristiques</h2>
                         <ul>
