@@ -1,18 +1,28 @@
+"use strict";
+
 /**
- * requête Ajax pour récupérer la liste des produits
+ * récupération de la liste des produits
+ * @returns {Promise<Response>}
  */
-function getProducts() {
-    const request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:3000/api/teddies/"); // méthode GET depuis l'url de l'api correspondante
-    request.send();
-    request.onreadystatechange = function () { // fonction appelée à chaque changement d'état de la requête
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) { // test si la requête est terminée et si le code http renvoyé est OK
-            const results = JSON.parse(this.responseText); // réponse de l'API convertie en objet JS
-            displayProducts(results);
+async function getProducts() {
+    // bloc testé
+    try {
+        const request = await fetch("http://localhost:3000/api/teddies/"); // requête Ajax
+        if (!request.ok) {
+            alert('Erreur HTTP ' + request.status); // affichage erreur si code HTTP différent de 200 à 299
         }
-    };
+        return request.json(); // analyse, conversion et renvoie du JSON en objet
+    }
+    // gestion des erreurs
+    catch(err) {
+        alert(err); // affichage des erreurs éventuelles
+    }
 }
 
+/**
+ * affichage la liste des produits
+ * @param products
+ */
 function displayProducts(products) {
     const container = document.getElementById("cards"); // on cible le div qui contiendra les vignettes
 
@@ -21,7 +31,7 @@ function displayProducts(products) {
          * product
          * @type {{_id: string, imageURL: string, name: string, price: number, description: string}}
          */
-        const id = product._id; // récupération des données utiles pour chaque produit
+        const id = product._id;
         const imgUrl = product.imageUrl;
         const name = product.name;
         const price = (product.price / 100).toFixed(2) + "€"; // mise en forme du prix
@@ -29,7 +39,10 @@ function displayProducts(products) {
         const card = document.createElement("div"); // création du div vignette
         card.classList.add("col-11", "col-sm-5", "col-lg-3", "card", "m-2", "py-3"); // ajout des classes Bootstrap
 
-        // ajout du contenu de la vignette en utilisant la syntaxe des template literals
+        /**
+         * contenu de la vignette en utilisant la syntaxe des template literals
+         * avec l'id du produit en paramètre d'url
+         */
         card.innerHTML = `<img src="${imgUrl}" class="card-img-top" alt="${description}"/>
     <div class="card-body d-flex flex-column justify-content-end">
         <h2 class="card-title">${name}</h2>
@@ -40,4 +53,4 @@ function displayProducts(products) {
     }
 }
 
-getProducts();
+getProducts().then(products => displayProducts(products)); // appel de getProducts() dont le résultat est passé à displayProducts()
