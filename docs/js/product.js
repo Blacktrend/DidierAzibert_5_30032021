@@ -74,15 +74,15 @@ function addToCart(event) {
     }
     if (!(optionIndex === 0) && (qty > 0)) { // on teste si une option est sélectionnée et que la quantité ne soit pas null
         event.preventDefault();
-        if (localStorage.getItem('orinoco' + id + option)) { // si la clé id+option existe déjà alors il faut mettre à jour la quantité
+        if (localStorage.getItem(id + option)) { // si la clé id+option existe déjà alors il faut mettre à jour la quantité
             const productUpdate = JSON.parse(localStorage.getItem(id + option)); // on récupère et converti les données déjà enregistrées en objet
             productUpdate.qty += productAdd.qty; // on ajoute la nouvelle quantité
-            localStorage.setItem('orinoco' + id + option, JSON.stringify(productUpdate)); // on écrase les données avec la nouvelle quantité
+            localStorage.setItem(id + option, JSON.stringify(productUpdate)); // on écrase les données avec la nouvelle quantité
             showInfo(qty);
             setTimeout(hideInfo, 3000);
         }
         else {
-            localStorage.setItem('orinoco' + id + option, JSON.stringify(productAdd)); // on stocke l'id unique et l'objet productAdded converti en string
+            localStorage.setItem(id + option, JSON.stringify(productAdd)); // on stocke l'id unique et l'objet productAdded converti en string
             showInfo(qty);
             setTimeout(hideInfo, 3000);
         }
