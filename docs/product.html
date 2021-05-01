@@ -86,20 +86,22 @@
             </nav>
             <section class="container-xl">
                 <div class="row flex-column-reverse flex-lg-row">
+                    <div id="info" class="info info__hide col-12 bg-success p-1 text-white font-weight-bold rounded text-center">
+                    </div>
                     <div class="col-12 col-lg-6">
                         <h1 id="name" class="text-center text-lg-left"></h1>
                         <p id="description"></p>
                         <a class="btn btn-outline-info mb-5" href="#details">En savoir plus</a>
                         <form action="" method="post" class="text-center text-lg-left mb-5">
                             <fieldset class="form-group">
-                                <label for="option" class="mb-0 mt-2 pl-1">Choisissez une couleur&nbsp;:</label>
-                                <select id="options" class="form-control mb-4 w-auto mx-auto mx-lg-0" name="option" id="option" required>
+                                <label for="options" class="mb-0 mt-2 pl-1">Choisissez une couleur&nbsp;:</label>
+                                <select id="options" class="form-control mb-4 w-auto mx-auto mx-lg-0" name="option" required>
                                     <option value="">--Veuillez choisir une option--</option>
 
                                 </select>
                                 <label for="qty" class="mb-0 mt-2 pl-1">Quantité&nbsp;:</label>
                                 <div class="d-lg-flex align-items-center">
-                                    <input class="form-control mx-auto mx-lg-0" type="number" id="qty" step="1" min="1" max="99" value="1" inputmode="numeric"/>
+                                    <input class="form-control mx-auto mx-lg-0" type="number" id="qty" step="1" min="1" max="99" value="1" inputmode="numeric" required/>
                                     <div id="price" class="font-weight-bold ml-lg-5 h3 mb-lg-0 mt-4 mt-lg-0"></div>
                                 </div>
                             </fieldset>
@@ -107,7 +109,7 @@
                         </form>
                     </div>
                     <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center">
-                        <img id="img" src="" class="product__img rounded img-fluid w-100" alt="" title="" width="690" height="445"/>
+                        <img id="img" src="https://via.placeholder.com/690x445/F4E9F1/F4E9F1" class="product__img rounded img-fluid w-100" alt="" title="" width="690" height="445"/>
                     </div>
                 </div>
                 <div class="row mt-5">

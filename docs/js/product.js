@@ -1,29 +1,38 @@
 "use strict";
 
 /**
- * récupération du paramètre id de l'url
+ * Récupération du paramètre id de l'url
  * @returns {string}
  */
 function getProductId() {
         const urlParams = new URLSearchParams(location.search); // récupération des paramètres de l'url
         return urlParams.get("id"); // renvoie l'id du produit indiqué dans l'url
 }
+const id = getProductId();
 
 /**
- * requête Ajax pour récupérer les données du produit
+ * Requête Ajax pour récupérer les données du produit
  */
 async function getProduct() {
-    const id = getProductId();
-    const request = await fetch("http://localhost:3000/api/teddies/" + id);
-    if (request.ok) { // valide si code HTTP entre 200 et 299
-        const product = await request.json(); // récupération et conversion du JSON en objet quand la promesse est résolue
-        displayProduct(product); // appel de la fonction pur afficher les données du produit
-    } else {
-        alert("Erreur HTTP " + request.status); // affichage de l'erreur si le status n'est pas ok
+    //const id = getProductId();
+    // bloc testé
+    try {
+        const request = await fetch("http://localhost:3000/api/teddies/" + id); // requête Ajax
+        if (!request.ok) {
+            alert('Erreur HTTP ' + request.status); // affichage erreur si code HTTP différent de 200 à 299
+        }
+        return request.json(); // analyse, conversion et renvoie du JSON en objet
+    }
+    // gestion des erreurs
+    catch(err) {
+        alert(err); // affichage des erreurs éventuelles
     }
 }
 
-
+/**
+ * Affichage du produit
+ * @param product
+ */
 function displayProduct(product) {
     /**
      * product
@@ -45,15 +54,62 @@ function displayProduct(product) {
         selectOptions.appendChild(option);
     }
 }
-getProduct().catch(alert);
+
+/**
+ * Ajout au panier
+ */
+function addToCart(event) {
+    const optionsSelector = document.getElementById("options");
+    const optionIndex = optionsSelector.options[optionsSelector.selectedIndex].index;
+    const qty = parseInt(document.getElementById("qty").value); //valeur numérique
+    const option = optionsSelector.options[optionsSelector.selectedIndex].textContent;
+    /**
+     * Objet produit ajouté au panier
+     * @type {{qty: number, id: string, option: string}}
+     */
+    const productAdd = {
+        id: id,
+        qty: qty,
+        option: option
+    }
+    if (!(optionIndex === 0) && (qty > 0)) { // on teste si une option est sélectionnée et que la quantité ne soit pas null
+        event.preventDefault();
+        if (localStorage.getItem('orinoco' + id + option)) { // si la clé id+option existe déjà alors il faut mettre à jour la quantité
+            const productUpdate = JSON.parse(localStorage.getItem(id + option)); // on récupère et converti les données déjà enregistrées en objet
+            productUpdate.qty += productAdd.qty; // on ajoute la nouvelle quantité
+            localStorage.setItem('orinoco' + id + option, JSON.stringify(productUpdate)); // on écrase les données avec la nouvelle quantité
+            showInfo(qty);
+            setTimeout(hideInfo, 3000);
+        }
+        else {
+            localStorage.setItem('orinoco' + id + option, JSON.stringify(productAdd)); // on stocke l'id unique et l'objet productAdded converti en string
+            showInfo(qty);
+            setTimeout(hideInfo, 3000);
+        }
+    }
+}
+
+/**
+ * Affichage du message d'ajout au panier
+ * @param qty
+ */
+function showInfo(qty) {
+    document.getElementById("info").innerText = "Produit ajouté au panier - quantité : +" + qty;
+    document.getElementById("info").classList.replace("info__hide", "info__show");
+}
+
+/**
+ * Cacher le message d'info
+ */
+function hideInfo() {
+    document.getElementById("info").classList.replace("info__show", "info__hide");
+}
 
 
-// gestion du clic sur bouton add to cart (données produit + quantité ---> localStorage - plusieurs produits possibles)
-
-/*const addToCartBtn = document.getElementById("add-to-cart");
-addToCartBtn.addEventListener('click', addToCart);
-function addToCart(e);
-    if () {
-        alert("Veuillez ...");
-        e.preventDefault();
-    }*/
+async function main() {
+    const product = await getProduct();
+    displayProduct(product);
+    document.getElementById("add-to-cart").addEventListener('click', addToCart);
+}
+main();
+console.log(localStorage);
