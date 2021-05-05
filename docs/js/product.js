@@ -14,14 +14,13 @@ const id = getProductId();
  * Requête Ajax pour récupérer les données du produit
  */
 async function getProduct() {
-    //const id = getProductId();
     // bloc testé
     try {
         const request = await fetch("http://localhost:3000/api/teddies/" + id); // requête Ajax
         if (!request.ok) {
             alert('Erreur HTTP ' + request.status); // affichage erreur si code HTTP différent de 200 à 299
         }
-        return request.json(); // analyse, conversion et renvoie du JSON en objet
+        return request.json(); // analyse, conversion et renvoi du JSON en objet
     }
     // gestion des erreurs
     catch(err) {
@@ -61,29 +60,35 @@ function displayProduct(product) {
 function addToCart(event) {
     const optionsSelector = document.getElementById("options");
     const optionIndex = optionsSelector.options[optionsSelector.selectedIndex].index;
-    const qty = parseInt(document.getElementById("qty").value); //valeur numérique
+    const imgUrl = document.getElementById("img").getAttribute("src");
+    const name = document.getElementById("name").textContent;
     const option = optionsSelector.options[optionsSelector.selectedIndex].textContent;
+    const quantity = parseInt(document.getElementById("qty").value); //valeur numérique
+    const price = document.getElementById("price").textContent;
     /**
      * Objet produit ajouté au panier
-     * @type {{qty: number, id: string, option: string}}
+     * @type {{quantity: number, id: string, option: string}}
      */
     const productAdd = {
         id: id,
-        qty: qty,
-        option: option
+        imgUrl: imgUrl,
+        name: name,
+        option: option,
+        quantity: quantity,
+        price: price,
     }
-    if (!(optionIndex === 0) && (qty > 0)) { // on teste si une option est sélectionnée et que la quantité ne soit pas null
+    if (!(optionIndex === 0) && (quantity > 0)) { // on teste si une option est sélectionnée et que la quantité ne soit pas null
         event.preventDefault();
-        if (localStorage.getItem(id + option)) { // si la clé id+option existe déjà alors il faut mettre à jour la quantité
-            const productUpdate = JSON.parse(localStorage.getItem(id + option)); // on récupère et converti les données déjà enregistrées en objet
-            productUpdate.qty += productAdd.qty; // on ajoute la nouvelle quantité
-            localStorage.setItem(id + option, JSON.stringify(productUpdate)); // on écrase les données avec la nouvelle quantité
-            showInfo(qty);
+        if (localStorage.getItem( 'cart' + id + option)) { // si la clé existe déjà alors il faut mettre à jour la quantité
+            const productUpdate = JSON.parse(localStorage.getItem('cart' + id + option)); // on récupère et converti les données déjà enregistrées en objet
+            productUpdate.quantity += productAdd.quantity; // on ajoute la nouvelle quantité
+            localStorage.setItem('cart' + id + option, JSON.stringify(productUpdate)); // on écrase les données avec la nouvelle quantité
+            showInfo(quantity);
             setTimeout(hideInfo, 3000);
         }
         else {
-            localStorage.setItem(id + option, JSON.stringify(productAdd)); // on stocke l'id unique et l'objet productAdded converti en string
-            showInfo(qty);
+            localStorage.setItem('cart' + id + option, JSON.stringify(productAdd)); // on stocke l'id unique et l'objet productAdd converti en string
+            showInfo(quantity);
             setTimeout(hideInfo, 3000);
         }
     }
@@ -91,10 +96,10 @@ function addToCart(event) {
 
 /**
  * Affichage du message d'ajout au panier
- * @param qty
+ * @param quantity
  */
-function showInfo(qty) {
-    document.getElementById("info").innerText = "Produit ajouté au panier - quantité : +" + qty;
+function showInfo(quantity) {
+    document.getElementById("info").innerText = "Produit ajouté au panier - quantité : +" + quantity;
     document.getElementById("info").classList.replace("info__hide", "info__show");
 }
 
