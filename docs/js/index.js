@@ -53,14 +53,8 @@ function displayProducts(products) {
     }
 }
 
-/* soit
- * getProducts().then(products => displayProducts(products)); // appel de getProducts() dont le résultat est passé à displayProducts()
-*/
-
-// soit
 async function main() {
     const products = await getProducts();
     displayProducts(products);
 }
-
 main();
