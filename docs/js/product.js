@@ -68,6 +68,7 @@ function addToCart(event, id) {
     const option = optionsSelector.options[optionsSelector.selectedIndex].textContent;
     const quantity = parseInt(document.getElementById("qty").value); //valeur numérique
     const price = document.getElementById("price").textContent;
+    const optionId = option.replaceAll(" ", ""); // on supprime les espaces
     /**
      * Objet produit ajouté au panier
      * @type {{quantity: number, id: string, option: string}}
@@ -80,7 +81,6 @@ function addToCart(event, id) {
         quantity: quantity,
         price: price,
     }
-    const optionId = option.replaceAll(" ", "");
 
     if (!(optionIndex === 0) && (quantity > 0)) { // on teste si une option est sélectionnée et que la quantité ne soit pas null
         event.preventDefault();

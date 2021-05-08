@@ -70,11 +70,30 @@ function displayCartRows(products) {
 
 
 // manage quantity
-function updateQuantity() {
-    const quantityInputs = document.getElementsByClassName("cart-quantity");
+function quantityEventListeners() {
+    const quantityInputs = document.getElementsByClassName("cart-quantity"); // array of quantity inputs
     for (let input of quantityInputs) {
-        input.addEventListener("change", test);
+        input.addEventListener("change", updateQuantity); // add event handler on each quantity input
     }
+}
+
+
+function updateQuantity(event) {
+    if (!event.target.validity.valid) { // quantity = 1 by default if not valid
+        event.target.value = 1;
+    }
+    const productUpdate = JSON.parse(localStorage.getItem(event.target.id));
+    productUpdate.quantity = event.target.value; // new quantity overwrite the old one
+    localStorage.setItem(event.target.id, JSON.stringify(productUpdate)); // update localStorage
+    const parentTd = event.target.parentElement;
+    const siblingSubTotal = parentTd.nextElementSibling;
+    /**
+     * reprendre ici pour récupérer en négatif l'ancien sous-total, puis afficher le nouveau sous-total et l'ajouter en positif
+     * à l'ancien sous-total, puis ajouter ce résultat au total
+     * @type {number}
+     */
+    let subTotal = - (Number(siblingSubTotal.innerText.replace(/[^0-9.]/g, ""))); // get old
+    siblingSubTotal.innerText = euro.format(productUpdate.price * productUpdate.quantity);
 }
 
 
@@ -91,6 +110,7 @@ function updateQuantity() {
 function main() {
     const products = getStoredProducts();
     displayCartRows(products);
+    quantityEventListeners();
 }
 main();
 
