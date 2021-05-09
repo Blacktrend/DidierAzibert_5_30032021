@@ -1,36 +1,36 @@
 "use strict";
 
 /**
- * Récupération du paramètre id de l'url
+ * Retrieving the url id parameter
  * @returns {string}
  */
 function getProductId() {
-        const urlParams = new URLSearchParams(location.search); // récupération des paramètres de l'url
-        return urlParams.get("id"); // renvoie l'id du produit indiqué dans l'url
+        const urlParams = new URLSearchParams(location.search); // recovery of the url parameters
+        return urlParams.get("id"); // returns the product id indicated in the url
 }
 
 /**
- * Requête Ajax pour récupérer les données du produit
+ * Ajax request to retrieve product data
  * @param id
  * @returns {Promise<any>}
  */
 async function getProduct(id) {
-    // bloc testé
+    // tested block
     try {
-        const request = await fetch("http://localhost:3000/api/teddies/" + id); // requête Ajax
+        const request = await fetch("http://localhost:3000/api/teddies/" + id); // Ajax request
         if (!request.ok) {
-            alert('Erreur HTTP ' + request.status); // affichage erreur si code HTTP différent de 200 à 299
+            alert('Erreur HTTP ' + request.status); // display error if HTTP code different from 200 to 299
         }
-        return request.json(); // analyse, conversion et renvoi du JSON en objet
+        return request.json(); // parsing, conversion and return of JSON to object
     }
-    // gestion des erreurs
+    // error handling
     catch(err) {
-        alert(err); // affichage des erreurs éventuelles
+        alert(err);
     }
 }
 
 /**
- * Affichage du produit
+ * Product display
  * @param product
  */
 function displayProduct(product) {
@@ -47,7 +47,7 @@ function displayProduct(product) {
     document.getElementById("img").setAttribute("title", product.name + "- Ours en peluche fait main");
     const selectOptions = document.getElementById("options");
     const colors = product.colors;
-    for (let color of colors) {
+    for (let color of colors) { // loop on the options to display them
         const option = document.createElement("option");
         option.innerText = color;
         option.setAttribute("value", color);
@@ -56,7 +56,7 @@ function displayProduct(product) {
 }
 
 /**
- * Ajout au panier
+ * Add to cart
  * @param event
  * @param id
  */
@@ -66,12 +66,13 @@ function addToCart(event, id) {
     const imgUrl = document.getElementById("img").getAttribute("src");
     const name = document.getElementById("name").textContent;
     const option = optionsSelector.options[optionsSelector.selectedIndex].textContent;
-    const quantity = parseInt(document.getElementById("qty").value); //valeur numérique
-    const price = document.getElementById("price").textContent;
-    const optionId = option.replaceAll(" ", ""); // on supprime les espaces
+    const quantity = parseInt(document.getElementById("qty").value); // numeric value
+    const price = Number(document.getElementById("price").textContent); // conversion to number
+    const optionId = option.replaceAll(" ", ""); // spaces removal
+    const subTotal = quantity * price;
     /**
-     * Objet produit ajouté au panier
-     * @type {{quantity: number, id: string, option: string}}
+     * Item added to cart object = will be stored in localStorage
+     * @type {{id: string, imgUrl: string, name: string, option: string, quantity: number, price: number, subTotal: number}}
      */
     const productAdd = {
         id: id,
@@ -80,19 +81,20 @@ function addToCart(event, id) {
         option: option,
         quantity: quantity,
         price: price,
+        subTotal: subTotal
     }
 
-    if (!(optionIndex === 0) && (quantity > 0)) { // on teste si une option est sélectionnée et que la quantité ne soit pas null
+    if (!(optionIndex === 0) && (quantity > 0)) { // test if option selected and quantity not null.
         event.preventDefault();
-        if (localStorage.getItem( 'cart' + id + optionId)) { // si la clé existe déjà alors il faut mettre à jour la quantité
-            const productUpdate = JSON.parse(localStorage.getItem('cart' + id + optionId)); // on récupère et converti les données déjà enregistrées en objet
-            productUpdate.quantity += productAdd.quantity; // on ajoute la nouvelle quantité
-            localStorage.setItem('cart' + id + optionId, JSON.stringify(productUpdate)); // on écrase les données avec la nouvelle quantité
+        if (localStorage.getItem( 'cart' + id + optionId)) { // if the key already exists then update the quantity
+            const productUpdate = JSON.parse(localStorage.getItem('cart' + id + optionId)); // retrieval and conversion of previously recorded data
+            productUpdate.quantity += productAdd.quantity; // add the new quantity
+            localStorage.setItem('cart' + id + optionId, JSON.stringify(productUpdate)); // overwrite the data with the new quantity
             showInfo(quantity);
             setTimeout(hideInfo, 3000);
         }
         else {
-            localStorage.setItem('cart' + id + optionId, JSON.stringify(productAdd)); // on stocke l'id unique et l'objet productAdd converti en string
+            localStorage.setItem('cart' + id + optionId, JSON.stringify(productAdd)); // store the unique id and the productAdd object converted to a string
             showInfo(quantity);
             setTimeout(hideInfo, 3000);
         }
@@ -100,7 +102,7 @@ function addToCart(event, id) {
 }
 
 /**
- * Affichage du message d'ajout au panier
+ * Display of the add to cart message
  * @param quantity
  */
 function showInfo(quantity) {
@@ -109,14 +111,14 @@ function showInfo(quantity) {
 }
 
 /**
- * Masquer le message d'ajout au panier
+ * Hide add to cart message after delay
  */
 function hideInfo() {
     document.getElementById("info").classList.replace("info__show", "info__hide");
 }
 
 /**
- * Fonction maître
+ * Master function
  * @returns {Promise<void>}
  */
 async function main() {
