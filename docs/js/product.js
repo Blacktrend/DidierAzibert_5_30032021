@@ -5,8 +5,8 @@
  * @returns {string}
  */
 function getProductId() {
-        const urlParams = new URLSearchParams(location.search); // recovery of the url parameters
-        return urlParams.get("id"); // returns the product id indicated in the url
+    const urlParams = new URLSearchParams(location.search); // recovery of the url parameters
+    return urlParams.get("id"); // returns the product id indicated in the url
 }
 
 /**
@@ -19,12 +19,12 @@ async function getProduct(id) {
     try {
         const request = await fetch("http://localhost:3000/api/teddies/" + id); // Ajax request
         if (!request.ok) {
-            alert('Erreur HTTP ' + request.status); // display error if HTTP code different from 200 to 299
+            alert("Erreur HTTP " + request.status); // display error if HTTP code different from 200 to 299
         }
         return request.json(); // parsing, conversion and return of JSON to object
     }
-    // error handling
-    catch(err) {
+        // error handling
+    catch (err) {
         alert(err);
     }
 }
@@ -48,10 +48,8 @@ function displayProduct(product) {
     const selectOptions = document.getElementById("options");
     const colors = product.colors;
     for (let color of colors) { // loop on the options to display them
-        const option = document.createElement("option");
-        option.innerText = color;
-        option.setAttribute("value", color);
-        selectOptions.appendChild(option);
+        const option = new Option(color, color);
+        selectOptions.append(option);
     }
 }
 
@@ -62,7 +60,7 @@ function displayProduct(product) {
  */
 function addToCart(event, id) {
     const optionsSelector = document.getElementById("options");
-    const optionIndex = optionsSelector.options[optionsSelector.selectedIndex].index;
+    const optionIndex = optionsSelector.selectedIndex;
     const imgUrl = document.getElementById("img").getAttribute("src");
     const name = document.getElementById("name").textContent;
     const option = optionsSelector.options[optionsSelector.selectedIndex].textContent;
@@ -75,25 +73,24 @@ function addToCart(event, id) {
      * @type {{id: string, imgUrl: string, name: string, option: string, quantity: number, price: number, subTotal: number}}
      */
     const productAdd = {
-        id: id,
-        imgUrl: imgUrl,
-        name: name,
-        option: option,
-        quantity: quantity,
-        price: price,
-        subTotal: subTotal
+        id,
+        imgUrl,
+        name,
+        option,
+        quantity,
+        price,
+        subTotal
     }
 
-    if (!(optionIndex === 0) && (quantity > 0)) { // test if option selected and quantity not null.
+    if (optionIndex && quantity) { // test if option selected (index>0) and quantity >0
         event.preventDefault();
-        if (localStorage.getItem( 'cart' + id + optionId)) { // if the key already exists then update the quantity
+        if (localStorage.getItem('cart' + id + optionId)) { // if the key already exists then update the quantity
             const productUpdate = JSON.parse(localStorage.getItem('cart' + id + optionId)); // retrieval and conversion of previously recorded data
             productUpdate.quantity += productAdd.quantity; // add the new quantity
             localStorage.setItem('cart' + id + optionId, JSON.stringify(productUpdate)); // overwrite the data with the new quantity
             showInfo(quantity);
             setTimeout(hideInfo, 3000);
-        }
-        else {
+        } else {
             localStorage.setItem('cart' + id + optionId, JSON.stringify(productAdd)); // store the unique id and the productAdd object converted to a string
             showInfo(quantity);
             setTimeout(hideInfo, 3000);
@@ -125,6 +122,7 @@ async function main() {
     const id = getProductId();
     const product = await getProduct(id);
     displayProduct(product);
-    document.getElementById("add-to-cart").addEventListener("click", function(event) { addToCart(event, id) });
+    document.getElementById("add-to-cart").addEventListener("click", event => addToCart(event, id));
 }
+
 main();

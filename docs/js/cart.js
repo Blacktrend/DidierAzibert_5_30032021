@@ -36,10 +36,7 @@ function displayCartRows(products) {
     const container = document.getElementById("cart-body");
     let total = 0;
     if (products.length === 0) { // if cart is empty
-        const cartContainer = document.getElementById("cart-container");
-        cartContainer.classList.add("bg-warning", "text-center", "p-2", "font-weight-bolder");
-        cartContainer.classList.remove("row");
-        cartContainer.innerText = "Votre panier est vide.";
+        cartIsEmpty();
     }
     else {
 
@@ -72,7 +69,7 @@ function displayCartRows(products) {
             <input class="cart-quantity form-control mx-auto mx-lg-0 w-auto" type="number" id="cart${id}${optionId}" step="1" min="1" max="99" value="${quantity}" inputmode="numeric"/>
         </td>
         <td class="align-middle text-right">${euro.format(subTotal)}</td>`;
-            container.appendChild(row); // add new row to table
+            container.append(row); // add new row to table
             total += subTotal; // order total calculation
         }
         document.getElementById("total").innerText = euro.format(total); // application of the currency format
@@ -82,13 +79,30 @@ function displayCartRows(products) {
 
 
 /**
- * Add eventListener on each quantity input
+ * Message info if cart is empty
  */
-function quantityEventListeners() {
+function cartIsEmpty() {
+    const cartContainer = document.getElementById("cart-container");
+    cartContainer.classList.add("bg-warning", "text-center", "p-2", "font-weight-bolder");
+    cartContainer.classList.remove("row");
+    cartContainer.innerText = "Votre panier est vide.";
+    document.getElementById("order").disabled = true; // disable submit order button
+}
+
+/**
+ * Add eventListeners on quantity inputs, remove buttons and empty button
+ */
+function addUpdateListeners() {
     const quantityInputs = document.getElementsByClassName("cart-quantity"); // array of quantity inputs
     for (let input of quantityInputs) {
         input.addEventListener("change", updateQuantity);
     }
+    const removeButtons = document.getElementsByClassName("remove-btn");
+    for (let remove of removeButtons) {
+        remove.addEventListener("click", removeProduct);
+    }
+    const emptyButton = document.getElementById("empty-btn");
+    emptyButton.addEventListener("click", emptyCart);
 }
 
 /**
@@ -112,21 +126,84 @@ function updateQuantity(event) {
     localStorage.setItem("total", String(newTotal));
 }
 
+/**
+ * Manage remove product buttons
+ * @param event
+ */
+function removeProduct(event) {
+    const row = event.target.closest("tr"); // get table row to delete
+    const key = row.querySelector("input").id; // get id of first input in the row = localStorage key
+    const subTotal = JSON.parse(localStorage.getItem(key)).subTotal;
+    const newTotal = +localStorage.getItem("total") - subTotal; // new total calculation
+    document.getElementById("total").innerText = euro.format(newTotal); // display new total
+    localStorage.setItem("total", String(newTotal)); // store new total
+    localStorage.removeItem(key); // remove in localStorage
+    row.remove(); // remove row from display
+    if (newTotal ===0) {
+        localStorage.removeItem("total");
+        cartIsEmpty();
+    }
+}
 
-// préparer l'array products
+/**
+ * Manage empty cart button
+ */
+function emptyCart() {
+    const keys = Object.keys(localStorage); // we get the list of keys in an array
+    for (let key of keys) { // loop to test each key if it's related to cart
+        if (key.startsWith("cart")) {
+            localStorage.removeItem(key);
+        }
+    }
+    localStorage.removeItem("total");
+    cartIsEmpty();
+}
 
-// manage remove product and empty cart
+/**
+ * Prepare products ids array
+ * @returns {*[]}
+ */
+function productsIds() {
+    let productsIds = [];
+    const keys = Object.keys(localStorage); // we get the list of keys in an array
+    for (let key of keys) { // loop to test each key if it's related to cart
+        if (key.startsWith("cart")) {
+            const product = JSON.parse(localStorage.getItem(key)); // get and convert JSON to object
+            productsIds.push(product.id); // add product id to array
+        }
+    }
+    return productsIds;
+}
 
-// manage quantity
 
-// data validation + préparation objet contact
+function formValidation() { // must return true or false
 
-// send request post
+}
+
+function contactObject() {
+
+}
+
+
+// send request post with contact object and product_ids array
+function order(event) {
+    if (formValidation()) {
+        const productsIds = productsIds(); // get array of products ids when order submit button is clicked (all changes done)
+        const contact = contactObject(); // get contact info
+
+    }
+
+
+}
+
 
 function main() {
     const products = getStoredProducts();
     displayCartRows(products);
-    quantityEventListeners();
+    addUpdateListeners();
+    // event handling on submit order button - need updated getStoredProducts in case of
+    document.getElementById("order").addEventListener("click", order);
 }
+
 main();
 

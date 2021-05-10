@@ -48,7 +48,7 @@ function displayProducts(products) {
         <p class="card-text"><span class="font-weight-bold">${price}</span></p>
         <a href="product.html?id=${id}" class="btn btn-primary">VOIR</a>
     </div>`; // product id added to url parameters
-        container.appendChild(card); // add the new card to the container
+        container.append(card); // add the new card to the container
     }
 }
 
