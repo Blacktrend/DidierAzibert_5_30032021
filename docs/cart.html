@@ -114,34 +114,39 @@
                     <div class="col">
                         <div class="dropdown-divider border-secondary"></div>
                         <h2 class="text-center mt-5">Vos coordonnées</h2>
-                        <form name="contact" action="" method="post" class="my-5">
+                        <form name="contact" id="contact" action="" method="post" class="my-5">
                             <div class="row">
                                 <fieldset class="form-group col-sm-6">
-                                    <label for="lastName" class="mb-0 mt-2 pl-1">Nom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
-                                    <input class="form-control" type="text" id="lastName" required maxlength="30" pattern="^(?!\s)((?!\u00d7|\u00f7)[-'a-zA-Z\s\u00c0-\u00ff\u0152\u0153])+"/>
-                                    <p class="font-italic small pl-1">(ne doit pas commencer par un espace, pas de chiffre et car. spéciaux= ' -)</p>
-                                    <label for="firstName" class="mb-0 mt-2 pl-1">Prénom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
-                                    <input class="form-control" type="text" id="firstName" required maxlength="30" pattern="^(?!\s)((?!\u00d7|\u00f7)[-'a-zA-Z\s\u00c0-\u00ff\u0152\u0153])+"/>
-                                    <p class="font-italic small pl-1">(ne doit pas commencer par un espace, pas de chiffre et car. spéciaux= ' -)</p>
-                                    <label for="address" class="mb-0 mt-2 pl-1">Adresse&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
-                                    <input class="form-control" type="text" id="address" required maxlength="180" pattern="^(?!\s)((?!\u00d7|\u00f7)[-',°a-zA-Z0-9\s\u00c0-\u00ff\u0152\u0153])+"/>
-                                    <p class="font-italic small">(ne doit pas commencer par un espace, et car. spéciaux= ' , -  °)</p>
+                                    <label for="lastName" class="d-block mb-0 mt-2">Nom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
+                                        <input class="form-control" name="form-inputs" type="text" id="lastName" required maxlength="30"
+                                               pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
+                                    </label>
+                                    <label for="firstName" class="d-block mb-0 mt-2">Prénom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
+                                        <input class="form-control" name="form-inputs" type="text" id="firstName" required maxlength="30"
+                                               pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
+                                    </label>
+                                    <label for="address" class="d-block mb-0 mt-2">Adresse&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
+                                        <input class="form-control" name="form-inputs" type="text" id="address" required maxlength="180"
+                                               pattern="[0-9]{0,4},?\s?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-,'°]?\s?[0-9]{0,4},?\s?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*\s?[0-9]{0,4}"/>
+                                    </label>
                                 </fieldset>
 
                                 <fieldset class="form-group col-sm-6">
-                                    <label for="cp" class="mb-0 mt-2 pl-1">Code postal&nbsp;:</label>
-                                    <input class="form-control" type="text" id="cp" inputmode="numeric" maxlength="5"/>
-                                    <p class="font-italic small pl-1">(5 chiffres)</p>
-                                    <label for="city" class="mb-0 mt-2 pl-1">Ville&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
-                                    <input class="form-control" type="text" id="city" required maxlength="60" pattern="^(?!\s)((?!\u00d7|\u00f7)[-'a-zA-Z\s\u00c0-\u00ff\u0152\u0153])+"/>
-                                    <p class="font-italic small pl-1">(ne doit pas commencer par un espace, pas de chiffre et car. spéciaux= ' -)</p>
-                                    <label for="email" class="mb-0 mt-2 pl-1">E-mail&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
-                                    <input class="form-control" type="email" id="email" required maxlength="40"/>
+                                    <label for="cp" class="d-block mb-0 mt-2">Code postal&nbsp;:
+                                        <input class="form-control" name="form-inputs" type="text" id="cp" inputmode="numeric" maxlength="5" minlength="5"/>
+                                    </label>
+                                    <label for="city" class="d-block mb-0 mt-2">Ville&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
+                                        <input class="form-control" name="form-inputs" type="text" id="city" required maxlength="60"
+                                               pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
+                                    </label>
+                                    <label for="email" class="d-block mb-0 mt-2">E-mail&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
+                                        <input class="form-control" name="form-inputs" type="email" id="email" required maxlength="60" minlength="6" pattern="[\w+]+[.-]?[\w+]+@[\w-]+(\.\w{2,6}){1,2}"/>
+                                    </label>
                                 </fieldset>
                                 <p class="text-danger font-italic pl-3"><span class="font-weight-bold">*</span>Obligatoire</p>
                             </div>
                             <div class="row justify-content-center mt-5">
-                                <button  id="order" class="btn btn-primary px-5 py-3 text-uppercase font-weight-bold" type="submit" name="Commander">Commander</button>
+                                <button  id="order" class="btn btn-primary px-5 py-3 text-uppercase font-weight-bold" type="submit" form="contact" name="Commander" value="Commander">Commander</button>
                             </div>
                         </form>
                     </div>

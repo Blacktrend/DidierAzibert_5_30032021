@@ -90,9 +90,9 @@ function cartIsEmpty() {
 }
 
 /**
- * Add eventListeners on quantity inputs, remove buttons and empty button
+ * Add eventListeners on quantity inputs, remove buttons, empty button and form inputs
  */
-function addUpdateListeners() {
+function addEventsListeners() {
     const quantityInputs = document.getElementsByClassName("cart-quantity"); // array of quantity inputs
     for (let input of quantityInputs) {
         input.addEventListener("change", updateQuantity);
@@ -103,6 +103,11 @@ function addUpdateListeners() {
     }
     const emptyButton = document.getElementById("empty-btn");
     emptyButton.addEventListener("click", emptyCart);
+    const formInputs = document.forms["contact"].elements["form-inputs"]; // array of inputs named "inputs" in form named "contact"
+    for (let formInput of formInputs) {
+        formInput.addEventListener("input", inputsValidation);
+        formInput.addEventListener("invalid", showInputError);
+    }
 }
 
 /**
@@ -159,11 +164,28 @@ function emptyCart() {
     cartIsEmpty();
 }
 
+function inputsValidation(event) {
+    event.target.setCustomValidity(""); // error message reset otherwise input is not validated
+    event.target.checkValidity(); // true or false
+}
+
+function showInputError(event) { // *** personnaliser les messages en fonction du type d'erreur ---> utiliser case switch plutôt que if ***
+    if (event.target.validity.valueMissing) {
+        event.target.setCustomValidity("Obligatoire !");
+    }
+    else {
+        event.target.setCustomValidity("Oups...erreur !");
+    }
+
+
+}
+
+
 /**
  * Prepare products ids array
  * @returns {*[]}
  */
-function productsIds() {
+function getProductsIds() {
     let productsIds = [];
     const keys = Object.keys(localStorage); // we get the list of keys in an array
     for (let key of keys) { // loop to test each key if it's related to cart
@@ -176,10 +198,6 @@ function productsIds() {
 }
 
 
-function formValidation() { // must return true or false
-
-}
-
 function contactObject() {
 
 }
@@ -187,22 +205,19 @@ function contactObject() {
 
 // send request post with contact object and product_ids array
 function order(event) {
-    if (formValidation()) {
-        const productsIds = productsIds(); // get array of products ids when order submit button is clicked (all changes done)
-        const contact = contactObject(); // get contact info
-
-    }
-
-
+    event.preventDefault(); // we don't want to submit but request instead
+    const productsIds = getProductsIds(); // get array of products ids when order submit button is clicked (all changes done and form validated)
+    console.log(productsIds);
+    const contact = contactObject(); // get contact info
 }
 
 
 function main() {
     const products = getStoredProducts();
     displayCartRows(products);
-    addUpdateListeners();
-    // event handling on submit order button - need updated getStoredProducts in case of
-    document.getElementById("order").addEventListener("click", order);
+    addEventsListeners();
+    // event handling on submit order button only if it's enabled
+    document.getElementById("contact").addEventListener("submit", order);
 }
 
 main();
