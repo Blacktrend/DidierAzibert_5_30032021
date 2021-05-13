@@ -104,14 +104,14 @@ function addToCart(event, id) {
  */
 function showInfo(quantity) {
     document.getElementById("info").innerText = "Produit ajouté au panier - quantité : +" + quantity;
-    document.getElementById("info").classList.replace("info__hide", "info__show");
+    document.getElementById("info").classList.replace("info--hide", "info--show");
 }
 
 /**
  * Hide add to cart message after delay
  */
 function hideInfo() {
-    document.getElementById("info").classList.replace("info__show", "info__hide");
+    document.getElementById("info").classList.replace("info--show", "info--hide");
 }
 
 /**

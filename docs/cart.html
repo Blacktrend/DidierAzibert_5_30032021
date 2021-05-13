@@ -6,7 +6,6 @@
         <title>Votre panier | Orinoco</title>
         <meta name="description" content="Votre panier">
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <!--<link rel="stylesheet" type="text/css" href="css/prefixed/style.css" /> *** A UTILISER après AUTOPREFIXER-->
         <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
         <script src="js/cart.js" async></script>
     </head>
@@ -114,34 +113,77 @@
                     <div class="col">
                         <div class="dropdown-divider border-secondary"></div>
                         <h2 class="text-center mt-5">Vos coordonnées</h2>
-                        <form name="contact" id="contact" action="" method="post" class="my-5">
+                        <form name="contact" id="contact" method="post" class="my-5">
                             <div class="row">
                                 <fieldset class="form-group col-sm-6">
-                                    <label for="lastName" class="d-block mb-0 mt-2">Nom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
-                                        <input class="form-control" name="form-inputs" type="text" id="lastName" required maxlength="30"
+                                    <div class="input-container position-relative">
+                                        <label for="lastName" class="d-block mb-0 mt-2">Nom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
+                                        <input class="form-control pr-5" name="lastName" type="text" id="lastName" required maxlength="30"
                                                pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
-                                    </label>
-                                    <label for="firstName" class="d-block mb-0 mt-2">Prénom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
-                                        <input class="form-control" name="form-inputs" type="text" id="firstName" required maxlength="30"
+                                        <span class="notice__toggle d-inline-block font-weight-bold" tabindex="0">?</span>
+                                        <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
+                                            - ne doit pas contenir de chiffre et ne doit pas commencer, ni finir par un espace ou un caractère spécial<br>
+                                            - caractères spéciaux autorisés : - '<br>
+                                            - pas plus de 2 mêmes lettres consécutives et longueur maxi = 30 caractères
+                                        </span>
+                                    </div>
+                                    <div class="input-container position-relative">
+                                        <label for="firstName" class="d-block mb-0 mt-2">Prénom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
+                                        <input class="form-control pr-5" name="firstName" type="text" id="firstName" required maxlength="30"
                                                pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
-                                    </label>
-                                    <label for="address" class="d-block mb-0 mt-2">Adresse&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
-                                        <input class="form-control" name="form-inputs" type="text" id="address" required maxlength="180"
+                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
+                                            - ne doit pas contenir de chiffre et ne doit pas commencer, ni finir par un espace ou un caractère spécial<br>
+                                            - caractères spéciaux autorisés : - '<br>
+                                            - pas plus de 2 mêmes lettres consécutives et longueur maxi = 30 caractères
+                                        </span>
+                                    </div>
+                                    <div class="input-container position-relative">
+                                        <label for="address" class="d-block mb-0 mt-2">Adresse&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
+                                        <input class="form-control pr-5" name="address" type="text" id="address" required maxlength="180"
                                                pattern="[0-9]{0,4},?\s?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-,'°]?\s?[0-9]{0,4},?\s?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*\s?[0-9]{0,4}"/>
-                                    </label>
+                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
+                                            - ne doit pas commencer, ni finir par un espace ou un caractère spécial<br>
+                                            - peut contenir des chiffres (4 consécutifs max)<br>
+                                            - caractères spéciaux autorisés : - ',°<br>
+                                            - pas plus de 2 mêmes lettres consécutives et longueur maxi = 180 caractères
+                                        </span>
+                                    </div>
                                 </fieldset>
 
                                 <fieldset class="form-group col-sm-6">
-                                    <label for="cp" class="d-block mb-0 mt-2">Code postal&nbsp;:
-                                        <input class="form-control" name="form-inputs" type="text" id="cp" inputmode="numeric" maxlength="5" minlength="5"/>
-                                    </label>
-                                    <label for="city" class="d-block mb-0 mt-2">Ville&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
-                                        <input class="form-control" name="form-inputs" type="text" id="city" required maxlength="60"
+                                    <div class="input-container position-relative">
+                                        <label for="cp" class="d-block mb-0 mt-2">Code postal&nbsp;:</label>
+                                        <input class="form-control pr-5" name="cp" type="text" id="cp" inputmode="numeric" maxlength="5" minlength="5"/>
+                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
+                                            - 5 chiffres
+                                        </span>
+                                    </div>
+                                    <div class="input-container position-relative">
+                                        <label for="city" class="d-block mb-0 mt-2">Ville&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
+                                        <input class="form-control pr-5" name="city" type="text" id="city" required maxlength="60"
                                                pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
-                                    </label>
-                                    <label for="email" class="d-block mb-0 mt-2">E-mail&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span>
-                                        <input class="form-control" name="form-inputs" type="email" id="email" required maxlength="60" minlength="6" pattern="[\w+]+[.-]?[\w+]+@[\w-]+(\.\w{2,6}){1,2}"/>
-                                    </label>
+                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
+                                            - ne doit pas contenir de chiffre et ne doit pas commencer, ni finir par un espace ou un caractère spécial<br>
+                                            - caractères spéciaux autorisés : - '<br>
+                                            - pas plus de 2 mêmes lettres consécutives et longueur maxi = 60 caractères
+                                        </span>
+                                    </div>
+                                    <div class="input-container position-relative">
+                                        <label for="email" class="d-block mb-0 mt-2">E-mail&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
+                                        <input class="form-control pr-5" name="email" type="email" id="email" required maxlength="60" minlength="6" pattern="[\w+]+[.-]?[\w+]+@[\w-]+(\.\w{2,6}){1,2}"/>
+                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
+                                            - sous la forme : exemple@exemple.ext<br>
+                                            - ne doit pas commencer, ni finir par un point ou un tiret (-)<br>
+                                            - pas de points ni de tirets consécutifs, pas d'espace, pas d'accent ni de cédille<br>
+                                            - caractères spéciaux autorisés : - + . _<br>
+                                            - minimum 6 caractères et maximum 60
+                                        </span>
+                                    </div>
                                 </fieldset>
                                 <p class="text-danger font-italic pl-3"><span class="font-weight-bold">*</span>Obligatoire</p>
                             </div>

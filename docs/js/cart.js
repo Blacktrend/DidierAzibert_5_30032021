@@ -83,30 +83,41 @@ function displayCartRows(products) {
  */
 function cartIsEmpty() {
     const cartContainer = document.getElementById("cart-container");
-    cartContainer.classList.add("bg-warning", "text-center", "p-2", "font-weight-bolder");
+    cartContainer.classList.add("bg-warning", "text-center", "p-2", "font-weight-bolder", "rounded");
     cartContainer.classList.remove("row");
     cartContainer.innerText = "Votre panier est vide.";
     document.getElementById("order").disabled = true; // disable submit order button
 }
 
 /**
- * Add eventListeners on quantity inputs, remove buttons, empty button and form inputs
+ * Add eventListeners on quantity inputs, remove buttons, empty button, form inputs, inputs notices toggles
  */
 function addEventsListeners() {
-    const quantityInputs = document.getElementsByClassName("cart-quantity"); // array of quantity inputs
-    for (let input of quantityInputs) {
-        input.addEventListener("change", updateQuantity);
+    if (localStorage.getItem("total")) { // test if cart isn't empty
+        const quantityInputs = document.getElementsByClassName("cart-quantity"); // array of quantity inputs
+        for (let input of quantityInputs) {
+            input.addEventListener("change", updateQuantity);
+        }
+
+        const removeButtons = document.getElementsByClassName("remove-btn");
+        for (let remove of removeButtons) {
+            remove.addEventListener("click", removeProduct);
+        }
+
+        const emptyButton = document.getElementById("empty-btn");
+        emptyButton.addEventListener("click", emptyCart);
     }
-    const removeButtons = document.getElementsByClassName("remove-btn");
-    for (let remove of removeButtons) {
-        remove.addEventListener("click", removeProduct);
-    }
-    const emptyButton = document.getElementById("empty-btn");
-    emptyButton.addEventListener("click", emptyCart);
-    const formInputs = document.forms["contact"].elements["form-inputs"]; // array of inputs named "inputs" in form named "contact"
+
+    const formInputs = document.forms["contact"].elements; // array of inputs in form named "contact"
     for (let formInput of formInputs) {
         formInput.addEventListener("input", inputsValidation);
         formInput.addEventListener("invalid", showInputError);
+        formInput.addEventListener("focusout", hideInputNotice);
+    }
+
+    const inputsNoticesToggles = document.getElementsByClassName("notice__toggle");
+    for (let inputNoticeToggle of inputsNoticesToggles) {
+        inputNoticeToggle.addEventListener("click", showInputNotice);
     }
 }
 
@@ -164,20 +175,59 @@ function emptyCart() {
     cartIsEmpty();
 }
 
+/**
+ * Check validity of inputs (to use with custom error messages)
+ * @param event
+ */
 function inputsValidation(event) {
     event.target.setCustomValidity(""); // error message reset otherwise input is not validated
     event.target.checkValidity(); // true or false
 }
 
-function showInputError(event) { // *** personnaliser les messages en fonction du type d'erreur ---> utiliser case switch plutôt que if ***
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity("Obligatoire !");
+/**
+ * Display custom error messages if inputs are not valid
+ * @param event
+ */
+function showInputError(event) {
+    const input = event.target;
+    if (input.validity.valueMissing) {
+        input.setCustomValidity("Obligatoire");
+    }
+    else if (input.validity.tooLong) {
+        input.setCustomValidity(`Ne doit pas dépasser ${input.maxLength} caractères`)
+    }
+    else if (input.validity.tooShort) {
+        input.setCustomValidity(`Au minimum ${input.minLength} caractères`)
+    }
+    else if (input.validity.patternMismatch) {
+        input.setCustomValidity(`Veuillez vérifier les critères de saisie`)
     }
     else {
-        event.target.setCustomValidity("Oups...erreur !");
+        input.setCustomValidity("Veuillez vérifier votre saisie");
     }
+}
 
+/**
+ * Toggle input notice
+ * @param event
+ */
+function showInputNotice(event) {
+    const inputNotice = event.target.nextElementSibling; // select span.notice
+    event.target.classList.toggle("bg-warning");
+    inputNotice.classList.toggle("notice--active");
+}
 
+/**
+ * Hide input notice when focus out except if focus is on the corresponding input
+ * @param event
+ */
+function hideInputNotice(event) {
+    const toggle = event.target.nextElementSibling;
+    const notice = event.target.nextElementSibling.nextElementSibling;
+    console.log("toggle = "+toggle+" et notice = "+notice);
+
+    toggle.classList.remove("bg-warning");
+    notice.classList.remove("notice--active");
 }
 
 
@@ -186,38 +236,76 @@ function showInputError(event) { // *** personnaliser les messages en fonction d
  * @returns {*[]}
  */
 function getProductsIds() {
-    let productsIds = [];
+    let products = [];
     const keys = Object.keys(localStorage); // we get the list of keys in an array
     for (let key of keys) { // loop to test each key if it's related to cart
         if (key.startsWith("cart")) {
             const product = JSON.parse(localStorage.getItem(key)); // get and convert JSON to object
-            productsIds.push(product.id); // add product id to array
+            products.push(product.id); // add product id to array
         }
     }
-    return productsIds;
+    return products;
 }
 
 
-function contactObject() {
-
+/**
+ * Send order and redirection to confirmation page
+ * @param event
+ */
+async function order(event) {
+    event.preventDefault(); // prevent default submit
+    const products = getProductsIds(); // get array of products ids
+    const form = document.forms["contact"];
+    /**
+     * Contact object
+     * @type {{firstName: string, lastName: string, address: string, city: string, email: string}}
+     */
+    const contact = { // get contact info and create contact object
+        firstName: form.elements.firstName.value,
+        lastName: form.elements.lastName.value,
+        address: form.elements.address.value,
+        city: form.elements.city.value,
+        email: form.elements.email.value
+    }
+    const json = JSON.stringify({contact, products}); // prepare json to send with post request
+    const orderConfirmation = await requestOrder(json); // object returned by the server
+    localStorage.setItem("order", JSON.stringify(orderConfirmation)); // store orderConfirmation
+    document.location.href = "confirmation.html"; // redirect to confirmation page
 }
 
 
-// send request post with contact object and product_ids array
-function order(event) {
-    event.preventDefault(); // we don't want to submit but request instead
-    const productsIds = getProductsIds(); // get array of products ids when order submit button is clicked (all changes done and form validated)
-    console.log(productsIds);
-    const contact = contactObject(); // get contact info
+/**
+ * Order POST request
+ * @param json
+ * @returns {Promise<Promise<any>|void>}
+ */
+async function requestOrder(json) {
+    // tested block
+    try {
+        const postRequest = await fetch("http://localhost:3000/api/teddies/order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            body: json
+        });
+        return postRequest.ok ? postRequest.json() : alert("Erreur HTTP " + postRequest.status); // if ok return object from json, else alert error
+    }
+        // error handling
+    catch (err) {
+        alert(err);
+    }
 }
 
 
+/**
+ * Master function
+ */
 function main() {
     const products = getStoredProducts();
     displayCartRows(products);
     addEventsListeners();
-    // event handling on submit order button only if it's enabled
-    document.getElementById("contact").addEventListener("submit", order);
+    document.getElementById("contact").addEventListener("submit", order); // when order submit button is clicked
 }
 
 main();
