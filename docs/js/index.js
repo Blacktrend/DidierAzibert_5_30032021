@@ -67,12 +67,10 @@ function quantityInCart() {
     }
     if (totalQuantity >0) {
         const counter = document.getElementById("counter");
-        counter.textContent = totalQuantity;
+        counter.textContent = String(totalQuantity);
         counter.classList.add("bg-danger");
     }
 }
-export {quantityInCart}; // to use it in product.js
-
 
 /**
  * Master function
