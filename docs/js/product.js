@@ -1,5 +1,9 @@
 "use strict";
 
+// use same function as in index.js
+import {quantityInCart} from "./index.js";
+quantityInCart();
+
 /**
  * Retrieving the url id parameter
  * @returns {string}
@@ -103,7 +107,8 @@ function addToCart(event, id) {
  * @param quantity
  */
 function showInfo(quantity) {
-    document.getElementById("info").innerText = "Produit ajouté au panier - quantité : +" + quantity;
+    document.getElementById("info").innerHTML = `<p class="m-0">Produit ajouté au panier - quantité : ${quantity}</p>
+<a href="cart.html"><button type='button' class='btn btn-primary text-uppercase font-weight-bold small'>Voir le panier</button></a>`;
     document.getElementById("info").classList.replace("info--hide", "info--show");
 }
 

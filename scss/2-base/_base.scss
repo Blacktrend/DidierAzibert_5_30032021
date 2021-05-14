@@ -45,23 +45,40 @@ span.notice {
   top: 62px;
   padding: 4px 16px;
   opacity: 0;
-  transition: opacity .2s ease-in-out;
   &--active {
     z-index: 2;
     opacity: 1;
   };
 };
-span.notice__toggle {
+button.notice__toggle {
   position: absolute;
   right: -13px;
   top: 19px;
   width: 48px;
   height: 48px;
   padding: 10px 0;
-  text-align: center;
+  border: none;
   border-radius: 50%;
-  cursor: pointer;
   background-color: $body-bg;
   z-index: 1;
+  &:hover {
+    background-color: $body-bg;
+  };
+  &.bg-warning:focus {
+    background-color: $warning !important;
+  }
 };
+
+#counter {
+  padding: 4px 0;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  right: -5px;
+  top: -5px;
+  color: white;
+  text-align: center;
+  line-height: 1;
+}
 

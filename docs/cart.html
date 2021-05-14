@@ -120,7 +120,7 @@
                                         <label for="lastName" class="d-block mb-0 mt-2">Nom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
                                         <input class="form-control pr-5" name="lastName" type="text" id="lastName" required maxlength="30"
                                                pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
-                                        <span class="notice__toggle d-inline-block font-weight-bold" tabindex="0">?</span>
+                                        <button class="notice__toggle font-weight-bold" type="button">?</button>
                                         <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
                                             - ne doit pas contenir de chiffre et ne doit pas commencer, ni finir par un espace ou un caractère spécial<br>
                                             - caractères spéciaux autorisés : - '<br>
@@ -131,7 +131,7 @@
                                         <label for="firstName" class="d-block mb-0 mt-2">Prénom&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
                                         <input class="form-control pr-5" name="firstName" type="text" id="firstName" required maxlength="30"
                                                pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
-                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <button class="notice__toggle font-weight-bold" type="button">?</button>
                                         <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
                                             - ne doit pas contenir de chiffre et ne doit pas commencer, ni finir par un espace ou un caractère spécial<br>
                                             - caractères spéciaux autorisés : - '<br>
@@ -142,7 +142,7 @@
                                         <label for="address" class="d-block mb-0 mt-2">Adresse&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
                                         <input class="form-control pr-5" name="address" type="text" id="address" required maxlength="180"
                                                pattern="[0-9]{0,4},?\s?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-,'°]?\s?[0-9]{0,4},?\s?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*\s?[0-9]{0,4}"/>
-                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <button class="notice__toggle font-weight-bold" type="button">?</button>
                                         <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
                                             - ne doit pas commencer, ni finir par un espace ou un caractère spécial<br>
                                             - peut contenir des chiffres (4 consécutifs max)<br>
@@ -156,16 +156,16 @@
                                     <div class="input-container position-relative">
                                         <label for="cp" class="d-block mb-0 mt-2">Code postal&nbsp;:</label>
                                         <input class="form-control pr-5" name="cp" type="text" id="cp" inputmode="numeric" maxlength="5" minlength="5"/>
-                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <button class="notice__toggle font-weight-bold" type="button">?</button>
                                         <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
-                                            - 5 chiffres
+                                            - 5 chiffres (facultatif)
                                         </span>
                                     </div>
                                     <div class="input-container position-relative">
                                         <label for="city" class="d-block mb-0 mt-2">Ville&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
                                         <input class="form-control pr-5" name="city" type="text" id="city" required maxlength="60"
                                                pattern="((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\1?(?!\1)(?:[-'\s]?((?!\u00d7|\u00f7)[A-Za-z\u00c0-\u00ff\u0152\u0153])\2?(?!\2))*"/>
-                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <button class="notice__toggle font-weight-bold" type="button">?</button>
                                         <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
                                             - ne doit pas contenir de chiffre et ne doit pas commencer, ni finir par un espace ou un caractère spécial<br>
                                             - caractères spéciaux autorisés : - '<br>
@@ -175,7 +175,7 @@
                                     <div class="input-container position-relative">
                                         <label for="email" class="d-block mb-0 mt-2">E-mail&nbsp;:<span class="font-weight-bold ml-1 text-danger">*</span></label>
                                         <input class="form-control pr-5" name="email" type="email" id="email" required maxlength="60" minlength="6" pattern="[\w+]+[.-]?[\w+]+@[\w-]+(\.\w{2,6}){1,2}"/>
-                                        <span class="notice__toggle d-inline-block font-weight-bold">?</span>
+                                        <button class="notice__toggle font-weight-bold" type="button">?</button>
                                         <span class="notice font-italic small rounded d-inline-block w-100 bg-warning">
                                             - sous la forme : exemple@exemple.ext<br>
                                             - ne doit pas commencer, ni finir par un point ou un tiret (-)<br>

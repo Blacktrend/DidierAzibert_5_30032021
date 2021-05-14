@@ -60,9 +60,13 @@ function displayCartRows(products) {
             <button type="button" class="remove-btn border-0 bg-transparent font-weight-bolder" aria-label="Remove product">X</button>
         </td>
         <td class="align-middle">
-            <img src="${imgUrl}" class="product__img--thumbnail rounded" alt="${name} - ours en peluche fait main" title="${name} - ours en peluche fait main" width="75" height="75"/>
+            <a href="product.html?id=${id}">
+                <img src="${imgUrl}" class="product__img--thumbnail rounded" alt="${name} - ours en peluche fait main" title="${name} - ours en peluche fait main" width="75" height="75"/>
+            </a>
         </td>
-        <td class="align-middle">${name} couleur ${option}</td>
+        <td class="align-middle">
+            <a href="product.html?id=${id}">${name} couleur ${option}</a>
+        </td>
         <td class="align-middle">${euro.format(price)}</td>
         <td class="align-middle">
             <label for="cart${id}${optionId}" class="mb-0 mt-2 pl-1 sr-only">Quantité</label>
@@ -90,7 +94,13 @@ function cartIsEmpty() {
 }
 
 /**
- * Add eventListeners on quantity inputs, remove buttons, empty button, form inputs, inputs notices toggles
+ * Add eventListeners on :
+ *      - quantity inputs
+ *      - remove buttons
+ *      - empty button
+ *      - form inputs
+ *      - inputs notices toggles
+ *      - inputs notices
  */
 function addEventsListeners() {
     if (localStorage.getItem("total")) { // test if cart isn't empty
@@ -112,12 +122,17 @@ function addEventsListeners() {
     for (let formInput of formInputs) {
         formInput.addEventListener("input", inputsValidation);
         formInput.addEventListener("invalid", showInputError);
-        formInput.addEventListener("focusout", hideInputNotice);
+        formInput.addEventListener("change", hideNoticeOnChange); // change as focusout or blur makes JS errors when clic on toggle
     }
 
     const inputsNoticesToggles = document.getElementsByClassName("notice__toggle");
     for (let inputNoticeToggle of inputsNoticesToggles) {
-        inputNoticeToggle.addEventListener("click", showInputNotice);
+        inputNoticeToggle.addEventListener("click", toggleInputNotice);
+    }
+
+    const inputsNotices = document.getElementsByClassName("notice");
+    for (let inputNotice of inputsNotices) {
+        inputNotice.addEventListener("click", hideNoticeOnClick );
     }
 }
 
@@ -130,7 +145,7 @@ function updateQuantity(event) {
         event.target.value = 1; //  prevent null quantity, quantity = 1 by default
     }
     const productUpdate = JSON.parse(localStorage.getItem(event.target.id)); // use quantity input id = localStorage id
-    productUpdate.quantity = event.target.value; // new quantity overwrite the old one
+    productUpdate.quantity = Number(event.target.value); // new quantity overwrite the old one
     const oldSubTotal = productUpdate.subTotal; // used in newTotal calculation
     productUpdate.subTotal = productUpdate.quantity * productUpdate.price; // new subTotal
     localStorage.setItem(event.target.id, JSON.stringify(productUpdate)); // update localStorage
@@ -211,25 +226,41 @@ function showInputError(event) {
  * Toggle input notice
  * @param event
  */
-function showInputNotice(event) {
-    const inputNotice = event.target.nextElementSibling; // select span.notice
+function toggleInputNotice(event) {
+    const notice = event.target.nextElementSibling; // select span.notice
     event.target.classList.toggle("bg-warning");
-    inputNotice.classList.toggle("notice--active");
+    notice.classList.toggle("notice--active");
 }
 
 /**
- * Hide input notice when focus out except if focus is on the corresponding input
+ * Hide input notice when clicked
  * @param event
  */
-function hideInputNotice(event) {
-    const toggle = event.target.nextElementSibling;
-    const notice = event.target.nextElementSibling.nextElementSibling;
-    console.log("toggle = "+toggle+" et notice = "+notice);
+function hideNoticeOnClick(event) {
+    const toggle = event.target.previousElementSibling;
+    const notice = event.target;
+    hideNotice(toggle, notice);
+}
 
+/**
+ * Hide input notice when input focus is out (change)
+ * @param event
+ */
+function hideNoticeOnChange(event) {
+    const toggle = event.target.nextElementSibling; // select toggle btn
+    const notice = event.target.nextElementSibling.nextElementSibling; // select span.notice **** A REVOIR ****
+    hideNotice(toggle, notice);
+}
+
+/**
+ * Hide input notice
+ * @param toggle
+ * @param notice
+ */
+function hideNotice(toggle, notice) {
     toggle.classList.remove("bg-warning");
     notice.classList.remove("notice--active");
 }
-
 
 /**
  * Prepare products ids array

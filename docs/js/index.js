@@ -52,6 +52,28 @@ function displayProducts(products) {
     }
 }
 
+
+/**
+ * Total quantity in cart display
+ */
+function quantityInCart() {
+    let totalQuantity = 0;
+    const keys = Object.keys(localStorage); // we get the list of keys in an array
+    for (let key of keys) { // loop to test each key if it's related to cart
+        if (key.startsWith("cart")) {
+            const product = JSON.parse(localStorage.getItem(key)); // get and convert JSON to object
+            totalQuantity += product.quantity;
+        }
+    }
+    if (totalQuantity >0) {
+        const counter = document.getElementById("counter");
+        counter.textContent = totalQuantity;
+        counter.classList.add("bg-danger");
+    }
+}
+export {quantityInCart}; // to use it in product.js
+
+
 /**
  * Master function
  * @returns {Promise<void>}
@@ -59,5 +81,6 @@ function displayProducts(products) {
 async function main() {
     const products = await getProducts();
     displayProducts(products);
+    quantityInCart();
 }
 main();
