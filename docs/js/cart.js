@@ -1,5 +1,7 @@
 "use strict";
 
+import {euro} from "./modules.js";
+
 /**
  * Retrieving products objects in array
  * @returns {*[]}
@@ -15,17 +17,6 @@ function getStoredProducts() {
     }
     return products;
 }
-
-/**
- * Currency format
- * @type {Intl.NumberFormat}
- */
-const euro = new Intl.NumberFormat("fr-FR", {
-    style: "currency",
-    currency: 'EUR',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-});
 
 
 /**

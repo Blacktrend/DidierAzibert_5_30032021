@@ -7,7 +7,7 @@
         <meta name="description" content="Confirmation de commande">
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
-        <script src="js/confirmation.js" async></script>
+        <script type="module" src="js/confirmation.js" async></script>
     </head>
     <body class="d-flex flex-column">
         <header class="container-fluid bg-dark">
@@ -78,6 +78,11 @@
                     <h2 class="mt-5 pt-2 border-top">Récapitulatif de votre commande du <span id="date"></span></h2>
                     <p>Numéro de commande&nbsp: <span class="font-weight-bold" id="order-id"></span></p>
                     <p>Total TTC&nbsp;: <span class="font-weight-bold" id="total"></span></p>
+                    <br>
+                    <p>Retour à l'accueil dans 10 secondes...</p>
+                    <a class="m-5" href="index.html">
+                        <button type="button" class="btn btn-outline-info">ACCUEIL</button>
+                    </a>
                 </div>
             </section>
         </main>

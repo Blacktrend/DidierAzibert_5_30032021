@@ -1,15 +1,6 @@
 "use strict";
 
-/**
- * Currency format
- * @type {Intl.NumberFormat}
- */
-const euro = new Intl.NumberFormat("fr-FR", {
-    style: "currency",
-    currency: 'EUR',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-});
+import {euro} from "./modules.js";
 
 
 /**
@@ -41,10 +32,13 @@ function displayDate() {
  */
 function reset() {
     localStorage.clear();
-    setTimeout(() => {document.location.href = "index.html";}, 8000); // redirect to home after 8s
+    setTimeout(() => {document.location.href = "index.html";}, 10000); // redirect to home after 10s
 }
 
 
+/**
+ * Master function
+ */
 function main() {
     displayOrderInfos();
     displayDate();
