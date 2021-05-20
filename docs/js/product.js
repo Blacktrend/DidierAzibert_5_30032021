@@ -7,8 +7,8 @@ import {quantityInCart} from "./modules.js";
  * @returns {string}
  */
 function getProductId() {
-    const urlParams = new URLSearchParams(location.search); // recovery of the url parameters
-    return urlParams.get("id"); // returns the product id indicated in the url
+    const urlParams = new URLSearchParams(location.search); // url parameters recovery
+    return urlParams.get("id"); // returns product id from url
 }
 
 /**
@@ -23,7 +23,7 @@ async function getProduct(id) {
         if (!request.ok) {
             alert("Erreur HTTP " + request.status); // display error if HTTP code different from 200 to 299
         }
-        return request.json(); // parsing, conversion and return of JSON to object
+        return request.json(); // parsing, conversion and return JSON to object
     }
         // error handling
     catch (err) {
@@ -49,7 +49,7 @@ function displayProduct(product) {
     document.getElementById("img").setAttribute("title", product.name + "- Ours en peluche fait main");
     const selectOptions = document.getElementById("options");
     const colors = product.colors;
-    for (let color of colors) { // loop on the options to display them
+    for (let color of colors) { // loop on options to display
         const option = new Option(color, color);
         selectOptions.append(option);
     }
@@ -87,14 +87,14 @@ function addToCart(event, id) {
 
     if (optionIndex && quantity) { // test if option selected (index>0) and quantity >0
         event.preventDefault();
-        if (localStorage.getItem('cart' + id + optionId)) { // if the key already exists then update the quantity
+        if (localStorage.getItem('cart' + id + optionId)) { // if key already exists then update quantity
             const productUpdate = JSON.parse(localStorage.getItem('cart' + id + optionId)); // retrieval and conversion of previously recorded data
-            productUpdate.quantity += productAdd.quantity; // add the new quantity
-            localStorage.setItem('cart' + id + optionId, JSON.stringify(productUpdate)); // overwrite the data with the new quantity
+            productUpdate.quantity += productAdd.quantity; // add new quantity
+            localStorage.setItem('cart' + id + optionId, JSON.stringify(productUpdate)); // overwrite data with new quantity
             showInfo(quantity);
             setTimeout(hideInfo, 3000);
         } else {
-            localStorage.setItem('cart' + id + optionId, JSON.stringify(productAdd)); // store the unique id and the productAdd object converted to a string
+            localStorage.setItem('cart' + id + optionId, JSON.stringify(productAdd)); // store unique id and productAdd object converted to string
             showInfo(quantity);
             setTimeout(hideInfo, 3000);
         }
@@ -104,7 +104,7 @@ function addToCart(event, id) {
 
 
 /**
- * Display of the add to cart message
+ * Display add to cart message
  * @param quantity
  */
 function showInfo(quantity) {
@@ -121,6 +121,19 @@ function hideInfo() {
 }
 
 /**
+ * Update quantity badge when storage event triggered
+ * (something added to cart on another tab or quantity changed)
+ */
+function listenOtherTab() {
+    window.addEventListener("storage", event => {
+        if (event.storageArea === localStorage && event.key.startsWith("cart")) {
+            quantityInCart();
+        }
+    })
+}
+
+
+/**
  * Master function
  * @returns {Promise<void>}
  */
@@ -130,6 +143,7 @@ async function main() {
     displayProduct(product);
     quantityInCart();
     document.getElementById("add-to-cart").addEventListener("click", event => addToCart(event, id));
+    listenOtherTab();
 }
 
 main();

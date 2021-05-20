@@ -56,6 +56,19 @@ function displayProducts(products) {
 
 
 /**
+ * Update quantity badge when storage event triggered
+ * (something added to cart on another tab or quantity changed)
+ */
+function listenOtherTab() {
+    window.addEventListener("storage", event => {
+        if (event.storageArea === localStorage && event.key.startsWith("cart")) {
+            quantityInCart();
+        }
+    })
+}
+
+
+/**
  * Master function
  * @returns {Promise<void>}
  */
@@ -63,5 +76,6 @@ async function main() {
     const products = await getProducts();
     displayProducts(products);
     quantityInCart();
+    listenOtherTab();
 }
 main();

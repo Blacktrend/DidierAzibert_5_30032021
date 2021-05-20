@@ -78,22 +78,23 @@ function displayCartRows(products) {
  */
 function cartIsEmpty() {
     const cartContainer = document.getElementById("cart-container");
-    cartContainer.classList.add("bg-warning", "text-center", "p-2", "font-weight-bolder", "rounded");
-    cartContainer.classList.remove("row");
-    cartContainer.innerText = "Votre panier est vide.";
+    const emptyCart = document.createElement("div");
+    emptyCart.id = "empty-info";
+    emptyCart.classList.add("text-center", "col-12", "mt-2");
+    emptyCart.innerHTML = "<p class='bg-warning p-2 font-weight-bolder rounded'>Votre panier est vide.</p>";
+    cartContainer.append(emptyCart);
     document.getElementById("order").disabled = true; // disable submit order button
+    document.getElementById("empty-btn").classList.add("text-hide"); // hide empty button
+    document.getElementById("total").closest("tr").classList.add("text-hide"); // hide "total row"
 }
 
 /**
- * Add eventListeners on :
+ * Add event Listeners on :
  *      - quantity inputs
  *      - remove buttons
  *      - empty button
- *      - form inputs
- *      - inputs notices toggles
- *      - inputs notices
  */
-function addEventsListeners() {
+function cartEventsListeners() {
     if (localStorage.getItem("total")) { // test if cart isn't empty
         const quantityInputs = document.getElementsByClassName("cart-quantity"); // array of quantity inputs
         for (let input of quantityInputs) {
@@ -108,7 +109,16 @@ function addEventsListeners() {
         const emptyButton = document.getElementById("empty-btn");
         emptyButton.addEventListener("click", emptyCart);
     }
+}
 
+
+/**
+ * Add event Listeners on :
+ *      - form inputs
+ *      - inputs notices toggles
+ *      - inputs notices
+ */
+function formEventsListeners() {
     const formInputs = document.forms["contact"].elements; // array of inputs in form named "contact"
     for (let formInput of formInputs) {
         formInput.addEventListener("input", inputsValidation);
@@ -123,9 +133,10 @@ function addEventsListeners() {
 
     const inputsNotices = document.getElementsByClassName("notice");
     for (let inputNotice of inputsNotices) {
-        inputNotice.addEventListener("click", hideNoticeOnClick );
+        inputNotice.addEventListener("click", hideNoticeOnClick);
     }
 }
+
 
 /**
  * Update quantities and totals in localStorage and display if any quantity input is modified
@@ -178,6 +189,8 @@ function emptyCart() {
         }
     }
     localStorage.removeItem("total");
+    document.getElementById("cart-body").innerHTML = "";
+    document.getElementById("total").innerHTML = "";
     cartIsEmpty();
 }
 
@@ -319,15 +332,46 @@ async function requestOrder(json) {
     }
 }
 
+/**
+ * Update the cart when storage event triggered
+ * (something added to cart on another tab)
+ */
+function listenOtherTab() {
+    window.addEventListener("storage", event => {
+        if (event.storageArea === localStorage && event.key.startsWith("cart")) {
+            const cartBody = document.getElementById("cart-body");
+            cartBody.innerHTML = "";
+            const emptyInfo = document.getElementById("empty-info");
+            if (emptyInfo) { // need to remove div and classes related to cartIsEmpty function
+                document.getElementById("empty-btn").classList.remove("text-hide");
+                document.getElementById("total").closest("tr").classList.remove("text-hide");
+                document.getElementById("cart-container").removeChild(emptyInfo);
+                document.getElementById("order").disabled = false; // enable order submit btn
+            }
+            displayCart(); // must recall to update the cart display
+        }
+    })
+}
+
+
+/**
+ * Display cart body
+ */
+function displayCart() {
+    const products = getStoredProducts();
+    displayCartRows(products);
+    cartEventsListeners();
+}
+
 
 /**
  * Master function
  */
 function main() {
-    const products = getStoredProducts();
-    displayCartRows(products);
-    addEventsListeners();
+    displayCart();
+    formEventsListeners();
     document.getElementById("contact").addEventListener("submit", order); // when order submit button is clicked
+    listenOtherTab();
 }
 
 main();
