@@ -74,6 +74,7 @@ function listenOtherTab() {
  */
 async function main() {
     const products = await getProducts();
+    console.log(products); // pour test
     displayProducts(products);
     quantityInCart();
     listenOtherTab();
