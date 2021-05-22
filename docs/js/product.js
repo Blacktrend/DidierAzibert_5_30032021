@@ -8,7 +8,7 @@ import {quantityInCart} from "./modules.js";
  */
 function getProductId() {
     const urlParams = new URLSearchParams(location.search); // url parameters recovery
-    console.log(urlParams.get("id")); // pour test
+    console.log("Id url param :", urlParams.get("id")); // pour test
     return urlParams.get("id"); // returns product id from url
 }
 
@@ -48,7 +48,7 @@ function displayProduct(product) {
     document.getElementById("img").setAttribute("src", product.imageUrl);
     document.getElementById("img").setAttribute("alt", product.name + "- Ours en peluche fait main");
     document.getElementById("img").setAttribute("title", product.name + "- Ours en peluche fait main");
-    console.log(product); // pour test
+    console.log("Objet product à afficher :", product); // pour test
     const selectOptions = document.getElementById("options");
     const colors = product.colors;
     for (let color of colors) { // loop on options to display
@@ -86,7 +86,7 @@ function addToCart(event, id) {
         price,
         subTotal
     }
-    console.log(productAdd);
+    console.log("Objet productAdd :", productAdd);
 
     if (optionIndex && quantity) { // test if option selected (index>0) and quantity >0
         event.preventDefault();

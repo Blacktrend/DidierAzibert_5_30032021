@@ -359,6 +359,7 @@ function listenOtherTab() {
  */
 function displayCart() {
     const products = getStoredProducts();
+    console.log("Array de produits :", products);
     displayCartRows(products);
     cartEventsListeners();
 }
