@@ -227,7 +227,7 @@ function showInputError(event) {
 }
 
 /**
- * Toggle input notice
+ * Toggle to show/hide input notice
  * @param event
  */
 function toggleInputNotice(event) {
@@ -270,7 +270,7 @@ function hideNotice(toggle, notice) {
  * Prepare products ids array
  * @returns {*[]}
  */
-function getProductsIds() {
+function productsIds() {
     let products = [];
     const keys = Object.keys(localStorage); // we get the list of keys in an array
     for (let key of keys) { // loop to test each key if it's related to cart
@@ -289,7 +289,7 @@ function getProductsIds() {
  */
 async function order(event) {
     event.preventDefault(); // prevent default submit
-    const products = getProductsIds(); // get array of products ids
+    const products = productsIds(); // get array of products ids
     const form = document.forms["contact"];
     /**
      * Contact object
@@ -359,7 +359,7 @@ function listenOtherTab() {
  */
 function displayCart() {
     const products = getStoredProducts();
-    console.log("Array de produits :", products);
+    console.log("Array de produits :", products); // pour test
     displayCartRows(products);
     cartEventsListeners();
 }

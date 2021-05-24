@@ -7,7 +7,11 @@ import {euro} from "./modules.js";
  * Display order infos
  */
 function displayOrderInfos() {
-    const order = JSON.parse(localStorage.getItem("order"));
+    /**
+     * order
+     * @type {{orderId: string, contact: object, products: array}}
+     */
+    const order = JSON.parse(localStorage.getItem("order")); // order post request result on cart page
     const total = +localStorage.getItem("total");
     document.getElementById("name").textContent = order.contact.firstName + " " + order.contact.lastName;
     document.getElementById("date").textContent = displayDate;

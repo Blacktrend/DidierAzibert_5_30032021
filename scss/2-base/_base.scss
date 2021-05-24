@@ -26,13 +26,16 @@ input:focus:invalid {
 
 .info {
   transition: all .3s ease-in-out;
+  position: fixed;
+  left: 0;
   &--hide {
     opacity: 0;
-    margin-top: -32px;
+    top: -32px;
   };
   &--show {
     opacity: 1;
-    margin-top: 0;
+    top: 0;
+    z-index: 2;
   }
 };
 
@@ -45,6 +48,7 @@ span.notice {
   top: 62px;
   padding: 4px 16px;
   opacity: 0;
+  z-index: -1;
   &--active {
     z-index: 2;
     opacity: 1;

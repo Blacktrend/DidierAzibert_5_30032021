@@ -1,6 +1,7 @@
 "use strict";
 
 import {quantityInCart} from "./modules.js";
+import {euro} from "./modules.js";
 
 /**
  * Retrieving the url id parameter
@@ -44,7 +45,7 @@ function displayProduct(product) {
     document.getElementById("breadcrumb").innerText = product.name;
     document.getElementById("name").innerText = product.name;
     document.getElementById("description").innerText = product.description;
-    document.getElementById("price").innerText = (product.price / 100).toFixed(2);
+    document.getElementById("price").innerText = euro.format(product.price / 100);
     document.getElementById("img").setAttribute("src", product.imageUrl);
     document.getElementById("img").setAttribute("alt", product.name + "- Ours en peluche fait main");
     document.getElementById("img").setAttribute("title", product.name + "- Ours en peluche fait main");
@@ -62,15 +63,16 @@ function displayProduct(product) {
  * Add to cart
  * @param event
  * @param id
+ * @param product
  */
-function addToCart(event, id) {
+function addToCart(event, id, product) {
     const optionsSelector = document.getElementById("options");
     const optionIndex = optionsSelector.selectedIndex;
     const imgUrl = document.getElementById("img").getAttribute("src");
     const name = document.getElementById("name").textContent;
     const option = optionsSelector.options[optionsSelector.selectedIndex].textContent;
     const quantity = parseInt(document.getElementById("qty").value); // numeric value
-    const price = Number(document.getElementById("price").textContent); // conversion to number
+    const price = product.price/100;
     const optionId = option.replaceAll(" ", ""); // spaces removal
     const subTotal = quantity * price;
     /**
@@ -145,7 +147,7 @@ async function main() {
     const product = await getProduct(id);
     displayProduct(product);
     quantityInCart();
-    document.getElementById("add-to-cart").addEventListener("click", event => addToCart(event, id));
+    document.getElementById("add-to-cart").addEventListener("click", event => addToCart(event, id, product));
     listenOtherTab();
 }
 
